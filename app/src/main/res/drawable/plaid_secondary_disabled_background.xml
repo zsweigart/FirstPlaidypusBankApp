@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ~ Copyright (c) 2020 Plaid Technologies, Inc. <support@plaid.com>
+  -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+  android:shape="rectangle">
+  <stroke
+    android:color="@color/plaid_black_400"
+    android:width="@dimen/corner_radius" />
+  <corners android:radius="@dimen/corner_radius" />
+</shape>

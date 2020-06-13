@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020 Plaid Technologies, Inc. <support@plaid.com>
+  -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:color="@color/plaid_blue_800" android:state_focused="true" /> <!-- Focused e.g. with track pad -->
+  <item android:color="@color/plaid_blue_900" android:state_pressed="true" /> <!-- Pressed -->
+  <item android:color="@color/plaid_black_400" android:state_enabled="false" /> <!-- Disabled -->
+  <item android:color="?attr/colorAccent" /> <!-- Default -->
+</selector>

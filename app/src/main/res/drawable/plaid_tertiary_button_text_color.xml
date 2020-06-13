@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020 Plaid Technologies, Inc. <support@plaid.com>
+  -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:color="?plaidTertiaryTextColorButtonFocused" android:state_focused="true" /> <!-- Focused e.g. with track pad -->
+  <item android:color="?plaidTertiaryTextColorButtonPressed" android:state_pressed="true" /> <!-- Pressed -->
+  <item android:color="?plaidTertiaryTextColorButtonDisabled" android:state_enabled="false" /> <!-- Disabled -->
+  <item android:color="?plaidTertiaryTextColorButtonNormal" /> <!-- Default -->
+</selector>

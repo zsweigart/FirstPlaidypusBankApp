@@ -1,0 +1,5 @@
+<resources>
+  <string name="app_name">First Plaidypus Bank</string>
+  <string name="logo_transition">logo_transition</string>
+  <string name="title_transition">title_transition</string>
+</resources>

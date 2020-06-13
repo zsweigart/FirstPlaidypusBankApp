@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_height="match_parent"
+  android:layout_width="match_parent"
+  android:paddingEnd="@dimen/space_2x"
+  android:paddingStart="@dimen/space_2x"
+  tools:context=".landing.LandingActivity">
+
+
+  <ImageView
+    android:id="@+id/logo"
+    android:layout_height="120dp"
+    android:layout_width="120dp"
+    android:src="@drawable/plaid_logo"
+    android:transitionName="@string/logo_transition"
+    app:layout_constraintBottom_toTopOf="@id/title"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_chainStyle="packed" />
+
+  <TextView
+    android:id="@+id/title"
+    style="@style/PlaidText.H1.Bold"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/space_2x"
+    android:layout_width="wrap_content"
+    android:text="First Plaidypus Bank"
+    android:transitionName="@string/title_transition"
+    app:layout_constraintBottom_toTopOf="@id/landing_username"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/logo" />
+
+  <androidx.appcompat.widget.AppCompatEditText
+    android:id="@+id/landing_username"
+    style="@style/PlaidInput"
+    android:hint="Username"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/space_3x"
+    android:layout_width="match_parent"
+    app:layout_constraintBottom_toTopOf="@id/landing_password"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintEnd_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/title" />
+
+  <androidx.appcompat.widget.AppCompatEditText
+    android:id="@+id/landing_password"
+    style="@style/PlaidInput"
+    android:hint="Password"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/space_2x"
+    android:layout_width="match_parent"
+    app:layout_constraintBottom_toTopOf="@id/landing_login"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintEnd_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/landing_username" />
+
+  <androidx.appcompat.widget.AppCompatTextView
+    android:id="@+id/landing_login"
+    style="@style/PlaidButton.Primary"
+    android:clickable="true"
+    android:focusable="true"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/space_2x"
+    android:layout_width="wrap_content"
+    android:text="Login"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/landing_password" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

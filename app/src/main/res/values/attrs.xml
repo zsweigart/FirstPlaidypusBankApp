@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020 Plaid Technologies, Inc. <support@plaid.com>
+  -->
+
+<resources>
+
+  <attr name="plaid_title" format="reference|string" />
+  <attr name="plaid_subtitle" format="reference|string" />
+  <attr name="plaid_icon" format="reference" />
+
+  <declare-styleable name="PlaidInput">
+    <attr name="plaid_hint" format="reference|string" />
+  </declare-styleable>
+  <declare-styleable name="PlaidListItemInstitution">
+    <attr name="plaid_icon" />
+    <attr name="plaid_title" />
+    <attr name="plaid_subtitle" />
+    <attr name="plaid_list_item_cta" format="reference" />
+  </declare-styleable>
+  <declare-styleable name="PlaidListItemSelection">
+    <attr name="plaid_list_item_value" format="reference|string" />
+    <attr name="plaid_list_item_descriptor" format="reference|string" />
+    <attr name="plaid_list_item_meta" format="reference|string" />
+  </declare-styleable>
+  <declare-styleable name="PlaidListItemAccordion">
+    <attr name="plaid_icon" />
+    <attr name="plaid_title" />
+    <attr name="plaid_info" format="reference|string" />
+  </declare-styleable>
+  <declare-styleable name="PlaidTitle">
+    <attr name="plaid_title" />
+    <attr name="plaid_subtitle" />
+  </declare-styleable>
+
+  <declare-styleable name="PlaidTextHeaderItem">
+    <attr name="plaid_title" />
+    <attr name="plaid_subtitle" />
+    <attr name="plaid_header_gravity">
+      <enum name="start" value="0" />
+      <enum name="center" value="1" />
+    </attr>
+  </declare-styleable>
+
+  <declare-styleable name="PlaidSellingPoint">
+    <attr name="plaid_title" />
+    <attr name="plaid_subtitle" />
+  </declare-styleable>
+
+  <declare-styleable name="PlaidBanner">
+    <attr name="plaid_banner_color">
+      <enum name="Blue" value="0" />
+      <enum name="Green" value="1" />
+      <enum name="Yellow" value="2" />
+      <enum name="Red" value="3" />
+      <enum name="Purple" value="4" />
+    </attr>
+    <attr name="plaid_banner_description" format="reference|string" />
+    <attr name="plaid_banner_cta" format="reference|string" />
+  </declare-styleable>
+  <declare-styleable name="PlaidLoadingView">
+    <attr name="plaid_progress_color">
+      <enum name="Blue" value="0" />
+      <enum name="Green" value="1" />
+      <enum name="Yellow" value="2" />
+      <enum name="Red" value="3" />
+      <enum name="Purple" value="4" />
+    </attr>
+    <attr name="plaid_loading_text" format="reference|string" />
+  </declare-styleable>
+
+  <attr name="plaidTertiaryTextColorButtonPressed" format="color" />
+  <attr name="plaidTertiaryTextColorButtonFocused" format="color" />
+  <attr name="plaidTertiaryTextColorButtonDisabled" format="color" />
+  <attr name="plaidTertiaryTextColorButtonNormal" format="color" />
+
+  <attr name="plaidTextColorH" format="color" />
+  <attr name="plaidTextColorBPrimary" format="color" />
+  <attr name="plaidTextColorBSecondary" format="color" />
+
+  <attr name="plaidDisabledListItemBackgroundColor" format="color" />
+
+  <attr name="plaidBannerBackgroundBlue" format="color" />
+  <attr name="plaidBannerIconBlue" format="color" />
+  <attr name="plaidBannerBackgroundGreen" format="color" />
+  <attr name="plaidBannerIconGreen" format="color" />
+  <attr name="plaidBannerBackgroundYellow" format="color" />
+  <attr name="plaidBannerIconYellow" format="color" />
+  <attr name="plaidBannerBackgroundRed" format="color" />
+  <attr name="plaidBannerIconRed" format="color" />
+  <attr name="plaidBannerBackgroundPurple" format="color" />
+  <attr name="plaidBannerIconPurple" format="color" />
+
+</resources>

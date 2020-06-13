@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020 Plaid Technologies, Inc. <support@plaid.com>
+  -->
+
+<resources>
+  <color name="plaid_white">#FFFFFF</color>
+
+  <color name="plaid_black_100">#F6F6F6</color>
+  <color name="plaid_black_200">#EBEBEB</color>
+  <color name="plaid_black_300">#D7D7D7</color>
+  <color name="plaid_black_400">#CACACA</color>
+  <color name="plaid_black_500">#B9B9B9</color>
+  <color name="plaid_black_600">#9B9B9B</color>
+  <color name="plaid_black_700">#878787</color>
+  <color name="plaid_black_800">#696969</color>
+  <color name="plaid_black_900">#4B4B4B</color>
+  <color name="plaid_black_1000">#111111</color>
+
+  <color name="plaid_blue_200">#D4F9FF</color>
+  <color name="plaid_blue_400">#B1EEFC</color>
+  <color name="plaid_blue_600">#63DAFF</color>
+  <color name="plaid_blue_800">#0A85EA</color>
+  <color name="plaid_blue_900">#0977D1</color>
+
+  <color name="plaid_purple_200">#E1E1FF</color>
+  <color name="plaid_purple_400">#C6BEFC</color>
+  <color name="plaid_purple_600">#9986F7</color>
+  <color name="plaid_purple_800">#7646EC</color>
+
+  <color name="plaid_red_200">#F9D9D9</color>
+  <color name="plaid_red_400">#FFAAB9</color>
+  <color name="plaid_red_600">#FF7885</color>
+  <color name="plaid_red_800">#F44E66</color>
+
+  <color name="plaid_yellow_200">#FEFBB8</color>
+  <color name="plaid_yellow_400">#FBF1A0</color>
+  <color name="plaid_yellow_600">#FCE76B</color>
+  <color name="plaid_yellow_800">#F2D211</color>
+
+  <color name="plaid_green_200">#D0FCE4</color>
+  <color name="plaid_green_400">#ABFFDB</color>
+  <color name="plaid_green_600">#5BEFBD</color>
+  <color name="plaid_green_800">#23D09C</color>
+</resources>
