@@ -2,6 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 29
@@ -16,10 +19,25 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        debug {
+            storeFile file('../docs/debug.jks')
+            storePassword 'Pla1dDebug'
+            keyAlias = 'BankDebugKey'
+            keyPassword 'BankDebug'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            testCoverageEnabled = true
+            debuggable = true
+            signingConfig signingConfigs.debug
         }
     }
 
@@ -30,6 +48,9 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+    kapt {
+        correctErrorTypes true
     }
 }
 
@@ -48,6 +69,19 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
     implementation 'androidx.navigation:navigation-ui:2.2.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
+    implementation 'com.google.firebase:firebase-analytics:17.4.3'
+    implementation 'com.google.firebase:firebase-messaging:20.2.0'
+    implementation "com.google.dagger:hilt-android:2.28-alpha"
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01'
+    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha01'
+    kapt 'com.google.dagger:hilt-android-compiler:2.28-alpha'
+    implementation "androidx.cardview:cardview:1.0.0"
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation"com.squareup.retrofit2:retrofit:2.9.0"
+    implementation"com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
+    implementation "com.facebook.stetho:stetho:1.5.1"
+    implementation "com.facebook.stetho:stetho-okhttp3:1.5.1"
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

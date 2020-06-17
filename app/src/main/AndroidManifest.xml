@@ -2,14 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.plaid.plaidypusbank">
 
+  <uses-permission android:name="android.permission.INTERNET" />
+
   <application
+    android:name=".PlaidypusApplication"
     android:allowBackup="true"
-    android:icon="@drawable/plaid_logo"
+    android:icon="@drawable/plaid_icon"
     android:label="@string/app_name"
-    android:roundIcon="@drawable/plaid_logo"
+    android:roundIcon="@drawable/plaid_icon"
     android:supportsRtl="true"
-    android:theme="@style/PlaidTheme">
-    <activity android:name=".home.HomeActivity">
+    android:theme="@style/PlaidTheme"
+    android:usesCleartextTraffic="true">
+    <activity android:name=".home.HomeActivity"
+      android:windowSoftInputMode="adjustResize">
 
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -17,6 +22,36 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+
+    <receiver android:name=".receiver.NotificationActionReceiver">
+      <intent-filter>
+        <action android:name="@string/notification_action_approve" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="@string/notification_action_reject" />
+      </intent-filter>
+    </receiver>
+
+    <service android:name=".service.NotificationActionService" />
+
+    <service
+      android:name=".notification.PlaidypusNotificationService"
+      android:exported="false">
+      <intent-filter>
+        <action android:name="com.google.firebase.MESSAGING_EVENT" />
+      </intent-filter>
+    </service>
+
+    <meta-data
+      android:name="com.google.firebase.messaging.default_notification_icon"
+      android:resource="@drawable/plaid" />
+    <meta-data
+      android:name="com.google.firebase.messaging.default_notification_color"
+      android:resource="@color/plaid_black_1000" />
+    <meta-data
+      android:name="com.google.firebase.messaging.default_notification_channel_id"
+      android:value="@string/default_notification_channel_id" />
+
   </application>
 
 </manifest>
