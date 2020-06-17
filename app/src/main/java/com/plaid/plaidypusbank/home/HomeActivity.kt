@@ -1,15 +1,13 @@
 package com.plaid.plaidypusbank.home
 
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.plaid.plaidypusbank.PlaidypusApplication
 import com.plaid.plaidypusbank.R
+import com.plaid.plaidypusbank.notification.PlaidypusNotificationService
 import com.plaid.plaidypusbank.state.UserManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -25,25 +23,38 @@ class HomeActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.home_activity)
     navController = Navigation.findNavController(this@HomeActivity, R.id.mainNavigationFragment)
+    if (intent.hasExtra(PlaidypusNotificationService.APPROVE_REQUEST)) {
+      navController.navigate(R.id.home_approve_nav_item)
+    }
   }
 
   override fun onBackPressed() {
-    if (navController.currentDestination?.id == R.id.home_main_nav_item) {
-      AlertDialog.Builder(this, R.style.AlertDialogTheme)//, R.style.AlertDialogCustom)
-        .setTitle("Logout")
-        .setMessage("Are you sure you want to logout?")
-        .setPositiveButton("LOGOUT") { d, _ ->
-          userManager.logout()
-          (application as PlaidypusApplication).onLogout()
-          d.dismiss()
-          super.onBackPressed()
+    when (navController.currentDestination?.id) {
+      R.id.home_main_nav_item -> {
+        AlertDialog.Builder(this, R.style.AlertDialogTheme)//, R.style.AlertDialogCustom)
+          .setTitle("Logout")
+          .setMessage("Are you sure you want to logout?")
+          .setPositiveButton("LOGOUT") { d, _ ->
+            userManager.logout()
+            (application as PlaidypusApplication).onLogout()
+            d.dismiss()
+            navController.navigate(R.id.home_landing_nav_item)
+          }
+          .setNegativeButton("CANCEL") { d, _ ->
+            d.dismiss()
+          }
+          .show()
+      }
+      R.id.home_approve_nav_item -> {
+        if (userManager.sessionActive) {
+          navController.navigate(R.id.home_approve_back_action)
+        } else {
+          navController.navigate(R.id.home_approve_unauthorized_action)
         }
-        .setNegativeButton("CANCEL") { d, _ ->
-          d.dismiss()
-        }
-        .show()
-    } else {
-      super.onBackPressed()
+      }
+      else -> {
+        super.onBackPressed()
+      }
     }
   }
 }

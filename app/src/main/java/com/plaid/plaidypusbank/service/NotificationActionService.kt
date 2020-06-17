@@ -6,6 +6,7 @@ import android.util.Log
 import com.plaid.plaidypusbank.networking.BankApi
 import com.plaid.plaidypusbank.notification.PlaidypusNotificationService.Companion.ACCEPTED
 import com.plaid.plaidypusbank.notification.PlaidypusNotificationService.Companion.PUSH_ID
+import com.plaid.plaidypusbank.storage.PendingPushStorage
 import com.plaid.plaidypusbank.storage.UserStorage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +23,9 @@ class NotificationActionService : IntentService("NotificationActionService") {
   @Inject
   lateinit var userStorage: UserStorage
 
+  @Inject
+  lateinit var pendingPushStorage: PendingPushStorage
+
   override fun onHandleIntent(intent: Intent?) {
     Log.i("ZDS", "NOTIFICATION ACTION SERVICE")
     intent?.let { i ->
@@ -33,10 +37,9 @@ class NotificationActionService : IntentService("NotificationActionService") {
             }
           }
           result?.await()
-          Log.i("ZDS", "AWAITED")
         }
       }
     }
-    Log.i("ZDS", "DONE")
+    pendingPushStorage.clear()
   }
 }

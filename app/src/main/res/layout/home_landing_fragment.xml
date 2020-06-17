@@ -36,56 +36,68 @@
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/landing_login_fields"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintEnd_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/title"
-    app:layout_constraintBottom_toBottomOf="parent" >
-
-  <androidx.appcompat.widget.AppCompatEditText
-    android:id="@+id/landing_email"
-    style="@style/PlaidInput"
-    android:hint="Username"
-    android:imeOptions="actionGo"
-    android:inputType="textEmailAddress"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/space_3x"
-    android:layout_width="match_parent"
-    android:visibility="visible"
-    app:layout_constraintBottom_toTopOf="@id/landing_password"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintEnd_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-
-  <androidx.appcompat.widget.AppCompatEditText
-    android:id="@+id/landing_password"
-    style="@style/PlaidInput"
-    android:hint="Password"
-    android:imeOptions="actionGo"
-    android:inputType="textPassword"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/space_2x"
-    android:layout_width="match_parent"
-    android:visibility="visible"
-    app:layout_constraintBottom_toTopOf="@id/landing_login"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintEnd_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/landing_email" />
-
-  <androidx.appcompat.widget.AppCompatTextView
-    android:id="@+id/landing_login"
-    style="@style/PlaidButton.Primary"
-    android:clickable="true"
-    android:focusable="true"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/space_2x"
-    android:layout_width="wrap_content"
-    android:text="Login"
-    android:visibility="visible"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/landing_password" />
+    app:layout_constraintEnd_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/title">
+
+    <androidx.appcompat.widget.AppCompatEditText
+      android:id="@+id/landing_email"
+      style="@style/PlaidInput"
+      android:hint="Username"
+      android:imeOptions="actionGo"
+      android:inputType="textEmailAddress"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/space_3x"
+      android:layout_width="match_parent"
+      android:visibility="visible"
+      app:layout_constraintBottom_toTopOf="@id/landing_password"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintEnd_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+      android:id="@+id/landing_password"
+      style="@style/PlaidInput"
+      android:hint="Password"
+      android:imeOptions="actionGo"
+      android:inputType="textPassword"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/space_2x"
+      android:layout_width="match_parent"
+      android:visibility="visible"
+      app:layout_constraintBottom_toTopOf="@id/landing_login"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintEnd_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/landing_email" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+      android:id="@+id/landing_login"
+      style="@style/PlaidButton.Primary"
+      android:clickable="true"
+      android:focusable="true"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/space_2x"
+      android:layout_width="wrap_content"
+      android:text="Login"
+      android:visibility="visible"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/landing_password" />
+
+    <ImageView
+      android:id="@+id/fingerprint_login"
+      android:clickable="true"
+      android:focusable="true"
+      android:layout_height="@dimen/space_6x"
+      android:layout_width="@dimen/space_6x"
+      android:src="@drawable/fingerprint"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/landing_password" />
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -94,11 +106,11 @@
     style="?android:attr/progressBarStyleHorizontal"
     android:indeterminateOnly="true"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/space_2x"
     android:layout_width="match_parent"
     android:visibility="invisible"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintEnd_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/title"
-    android:layout_marginTop="@dimen/space_2x"/>
+    app:layout_constraintTop_toBottomOf="@id/title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

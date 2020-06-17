@@ -13,6 +13,7 @@ class UserStorage @Inject constructor(application: Application, private val gson
   companion object {
     const val SHARED_PREFS_NAME = "USER_PREFS"
     const val USER_KEY = "user"
+    const val FINGERPRINT_ENABLED_KEY = "fingerprint_enabled"
   }
 
   private var user: User? = null
@@ -36,4 +37,15 @@ class UserStorage @Inject constructor(application: Application, private val gson
     user = null
     sharedPrefs.edit().clear().apply()
   }
+
+  fun setFingerprintEnabled() {
+    sharedPrefs.edit().putBoolean(FINGERPRINT_ENABLED_KEY, true).apply()
+  }
+
+  fun setFingerprintDisabled() {
+    sharedPrefs.edit().putBoolean(FINGERPRINT_ENABLED_KEY, false).apply()
+  }
+
+  @WorkerThread
+  fun isFingerprintEnabled(): Boolean = sharedPrefs.getBoolean(FINGERPRINT_ENABLED_KEY, false)
 }

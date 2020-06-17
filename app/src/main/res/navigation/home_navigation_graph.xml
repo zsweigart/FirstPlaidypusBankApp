@@ -20,6 +20,31 @@
   <fragment
     android:id="@+id/home_main_nav_item"
     android:name="com.plaid.plaidypusbank.home.main.HomeMainFragment"
-    tools:layout="@layout/home_main_fragment" />
+    tools:layout="@layout/home_main_fragment" >
+
+    <action
+      android:id="@+id/home_approve_action"
+      app:destination="@id/home_approve_nav_item" />
+
+  </fragment>
+
+  <fragment
+    android:id="@+id/home_approve_nav_item"
+    android:name="com.plaid.plaidypusbank.home.approve.ApproveFragment"
+    tools:layout="@layout/home_approve_fragment">
+
+    <action
+      android:id="@+id/home_approve_complete_action"
+      app:destination="@id/home_main_nav_item" />
+
+    <action
+      android:id="@+id/home_approve_unauthorized_action"
+      app:destination="@id/home_landing_nav_item" />
+
+    <action
+      android:id="@+id/home_approve_back_action"
+      app:destination="@id/home_main_nav_item" />
+
+  </fragment>
 
 </navigation>

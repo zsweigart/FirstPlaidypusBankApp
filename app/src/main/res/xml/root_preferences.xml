@@ -1,0 +1,9 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <SwitchPreferenceCompat
+    app:key="fingerprint"
+    app:summaryOff="Fingerprint Disabled"
+    app:summaryOn="Fingerprint Enabled"
+    app:title="Fingerprint Login" />
+
+</PreferenceScreen>

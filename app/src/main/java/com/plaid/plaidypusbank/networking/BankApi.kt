@@ -16,7 +16,7 @@ import javax.inject.Singleton
 class BankApi @Inject constructor() {
 
   companion object {
-    const val BASE_URL = "http://19ee4830e4f2.ngrok.io"
+    const val BASE_URL = "https://72e031bdca10.ngrok.io/"
   }
 
   private val retrofit: Retrofit

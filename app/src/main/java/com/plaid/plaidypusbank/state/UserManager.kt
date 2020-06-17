@@ -1,6 +1,7 @@
 package com.plaid.plaidypusbank.state
 
 import android.util.Log
+import androidx.annotation.WorkerThread
 import com.plaid.plaidypusbank.models.User
 import com.plaid.plaidypusbank.networking.BankApi
 import com.plaid.plaidypusbank.storage.UserStorage
@@ -14,7 +15,13 @@ class UserManager @Inject constructor(private val bankApi: BankApi, private val 
     userStorage.loadUser()
   }
 
-  suspend fun isLoggedIn() = userStorage.loadUser() != null
+  var sessionActive: Boolean = false
+
+  @WorkerThread
+  fun isLoggedIn() = userStorage.loadUser() != null
+
+  @WorkerThread
+  fun loadUser(): User? = userStorage.loadUser()
 
   suspend fun login(email: String, password: String, pushToken: String): LoginError? {
     try {
@@ -22,6 +29,7 @@ class UserManager @Inject constructor(private val bankApi: BankApi, private val 
       return if (response.isSuccessful) {
         val loginResponse = response.body()
         if (loginResponse != null) {
+          sessionActive = true
           userStorage.saveUser(User(loginResponse.userSessionToken))
           Log.i("ZDS", loginResponse.userSessionToken)
           null
@@ -37,6 +45,18 @@ class UserManager @Inject constructor(private val bankApi: BankApi, private val 
   }
 
   fun logout() {
+    disableFingerprint()
     userStorage.clearUser()
+  }
+
+  @WorkerThread
+  fun isFingerprintEnabled() = userStorage.isFingerprintEnabled()
+
+  fun enableFingerprint() {
+    userStorage.setFingerprintEnabled()
+  }
+
+  fun disableFingerprint() {
+    userStorage.setFingerprintDisabled()
   }
 }

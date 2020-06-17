@@ -11,7 +11,12 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -19,11 +24,13 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.plaid.plaidypusbank.R
 import com.plaid.plaidypusbank.home.HomeActivity
 import com.plaid.plaidypusbank.home.main.HomeMainViewModel
+import com.plaid.plaidypusbank.models.User
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LandingFragment : Fragment() {
 
+  @Suppress("Unused")
   private val sharedViewModel: HomeMainViewModel by viewModels()
   private val landingViewModel: LandingViewModel by viewModels()
 
@@ -34,6 +41,7 @@ class LandingFragment : Fragment() {
   private lateinit var loginButton: TextView
   private lateinit var progressBar: ProgressBar
   private lateinit var landingLoginButtons: ConstraintLayout
+  private lateinit var fingerprintLogin: ImageView
 
   override fun onCreateView(
     inflater: LayoutInflater, container: ViewGroup?,
@@ -47,17 +55,22 @@ class LandingFragment : Fragment() {
     loginButton = root.findViewById(R.id.landing_login)
     progressBar = root.findViewById(R.id.landing_progress_bar)
     landingLoginButtons = root.findViewById(R.id.landing_login_fields)
+    fingerprintLogin = root.findViewById(R.id.fingerprint_login)
 
-    passwordField.setOnEditorActionListener { v, actionId, event ->
+    fingerprintLogin.setOnClickListener {
+      showBiometrics(BiometricManager.from(requireContext()))
+    }
+
+    passwordField.setOnEditorActionListener { _, actionId, _ ->
       if (actionId == EditorInfo.IME_ACTION_GO
         || actionId == EditorInfo.IME_ACTION_DONE
         || actionId == EditorInfo.IME_ACTION_NEXT
       ) {
         landingViewModel.login(emailField.text.toString(), passwordField.text.toString())
         hideKeyboard(root)
-        true
+        return@setOnEditorActionListener true
       }
-      false
+      return@setOnEditorActionListener false
     }
 
     landingViewModel.landingState.observe(viewLifecycleOwner, Observer(::updateUi))
@@ -71,15 +84,90 @@ class LandingFragment : Fragment() {
 
   private fun updateUi(landingState: LandingState) {
     when (landingState) {
-      LandingState.Login -> showLogin()
+      is LandingState.Login -> showLogin(landingState.user)
       LandingState.Loading -> showProgress()
-      LandingState.LoggedIn -> {
+      is LandingState.LoggedIn -> {
         passwordField.text.clear()
-        goToHome()
-        landingViewModel.landingState.value = LandingState.Login
+        maybeShowEnableDialogPrompt()
+        landingViewModel.landingState.value = LandingState.Login(landingState.user)
       }
-      is LandingState.Error -> showLogin()
+      is LandingState.Error -> showLogin(landingState.user)
     }
+  }
+
+  override fun onResume() {
+    super.onResume()
+    landingViewModel.initialize()
+  }
+
+  private fun maybeShowEnableDialogPrompt() {
+    val biometricManager = BiometricManager.from(requireActivity())
+    if (landingViewModel.fingerprintEnabled || biometricManager.canAuthenticate() != BiometricManager.BIOMETRIC_SUCCESS) {
+      goToHome()
+      return
+    } else {
+      AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)//, R.style.AlertDialogCustom)
+        .setTitle("Enable Fingerprint")
+        .setMessage("Do you want to enable fingerprint for easier log in next time?")
+        .setPositiveButton("ENABLE") { d, _ ->
+          showBiometrics(biometricManager)
+        }
+        .setNegativeButton("SKIP") { d, _ ->
+          goToHome()
+        }
+        .show()
+    }
+  }
+
+  private fun showBiometrics(biometricManager: BiometricManager) {
+    val executor = ContextCompat.getMainExecutor(requireContext())
+    val biometricPrompt = BiometricPrompt(this, executor,
+      object : BiometricPrompt.AuthenticationCallback() {
+        override fun onAuthenticationError(
+          errorCode: Int,
+          errString: CharSequence
+        ) {
+          super.onAuthenticationError(errorCode, errString)
+          Toast.makeText(
+            requireActivity(),
+            "Unable to authenticate with fingerprint", Toast.LENGTH_SHORT
+          )
+            .show()
+          goToHome()
+        }
+
+        override fun onAuthenticationSucceeded(
+          result: BiometricPrompt.AuthenticationResult
+        ) {
+          super.onAuthenticationSucceeded(result)
+          Toast.makeText(
+            requireActivity(),
+            "Fingerprint  addeed!", Toast.LENGTH_SHORT
+          )
+            .show()
+          landingViewModel.startSession()
+          landingViewModel.enableFingerprint()
+          goToHome()
+        }
+
+        override fun onAuthenticationFailed() {
+          super.onAuthenticationFailed()
+          Toast.makeText(
+            requireActivity(),
+            "Unable to authenticate with fingerprint", Toast.LENGTH_SHORT
+          )
+            .show()
+          goToHome()
+        }
+      })
+
+    biometricPrompt.authenticate(
+      BiometricPrompt.PromptInfo.Builder()
+        .setTitle("Setup Fingerprint for First Plaidypus Bank")
+        .setSubtitle("Log in using your fingerprint credential")
+        .setNegativeButtonText("SKIP")
+        .build()
+    )
   }
 
   private fun goToHome() {
@@ -90,9 +178,14 @@ class LandingFragment : Fragment() {
     (requireActivity() as HomeActivity).navController.navigate(R.id.home_login_action, null, null, extras)
   }
 
-  private fun showLogin() {
+  private fun showLogin(user: User?) {
     progressBar.visibility = View.INVISIBLE
     landingLoginButtons.visibility = View.VISIBLE
+    if (user == null || !landingViewModel.fingerprintEnabled) {
+      fingerprintLogin.visibility = View.GONE
+    } else {
+      fingerprintLogin.visibility = View.VISIBLE
+    }
   }
 
   private fun showProgress() {
@@ -100,7 +193,7 @@ class LandingFragment : Fragment() {
     landingLoginButtons.visibility = View.INVISIBLE
   }
 
-  fun hideKeyboard(view: View) {
+  private fun hideKeyboard(view: View) {
     val inputManager: InputMethodManager =
       view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     val binder = view.windowToken

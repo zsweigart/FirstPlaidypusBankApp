@@ -13,7 +13,8 @@
     android:supportsRtl="true"
     android:theme="@style/PlaidTheme"
     android:usesCleartextTraffic="true">
-    <activity android:name=".home.HomeActivity"
+    <activity
+      android:name=".home.HomeActivity"
       android:windowSoftInputMode="adjustResize">
 
       <intent-filter>
@@ -22,6 +23,8 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+
+    <activity android:name=".settings.SettingsActivity" />
 
     <receiver android:name=".receiver.NotificationActionReceiver">
       <intent-filter>

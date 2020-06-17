@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.plaid.plaidypusbank.PlaidypusApplication
+import com.plaid.plaidypusbank.models.User
 import com.plaid.plaidypusbank.state.LoginError
 import com.plaid.plaidypusbank.state.UserManager
 import kotlinx.coroutines.Dispatchers
@@ -22,9 +23,25 @@ class LandingViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
   val landingState = MutableLiveData<LandingState>()
+  var user: User? = null
+  var fingerprintEnabled: Boolean = false
 
   init {
-    landingState.value = LandingState.Login
+    landingState.value = LandingState.Loading
+  }
+
+  fun initialize() {
+    viewModelScope.launch {
+      user = withContext(Dispatchers.IO) {
+        userManager.loadUser()
+      }
+
+      fingerprintEnabled = withContext(Dispatchers.IO) {
+        userManager.isFingerprintEnabled()
+      }
+
+      landingState.value = LandingState.Login(user)
+    }
   }
 
   fun login(email: String, password: String) {
@@ -48,11 +65,23 @@ class LandingViewModel @ViewModelInject constructor(
           }
 
           if (loginError == null) {
-            landingState.value = LandingState.LoggedIn
+            user = withContext(Dispatchers.IO) {
+              userManager.loadUser()
+            }
+
+            landingState.value = LandingState.LoggedIn(user)
           } else {
-            landingState.value = LandingState.Error(LoginError())
+            landingState.value = LandingState.Error(user, LoginError())
           }
         }
       })
+  }
+
+  fun enableFingerprint() {
+    userManager.enableFingerprint()
+  }
+
+  fun startSession() {
+    userManager.sessionActive = true
   }
 }
